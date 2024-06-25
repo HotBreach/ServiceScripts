@@ -42,16 +42,16 @@ required                        pam_mkhomedir.so umask=0022 skel=/etc/skel
 EOF
 sudo pam-auth-update
 sudo systemctl restart sssd 
-systemctl status sssd 
 #Настройка доступа к серверу 
 sudo realm permit 'Domain Admins'
 sudo systemctl restart sssd
-sudo bash -c "cat > /etc/sudoers.d/domain_admins" <<EOF
+sudo cat > /etc/sudoers.d/domain_admins <<EOF
 %Domain Admins@$domain     ALL=(ALL)   ALL
 %DomainAdmins@$domain     ALL=(ALL)   ALL
-%system\ super\ Domain Admins@example.com ALL=(ALL)       ALL
+%system\ super\ Domain Admins@$domain ALL=(ALL)       ALL
 EOF
 sudo chmod 0440 /etc/sudoers.d/domain_admins
 sudo systemctl restart sssd
+systemctl status sssd
 echo "Выполнено!"
 echo "Необходима перезегрузка"
