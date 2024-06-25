@@ -6,9 +6,8 @@ echo -n "Введите имя сервера: "
 read -r host
 # shellcheck disable=SC2154
 echo -n "Ваш домен $domain"
-echo -n "Ваш сервер $host"
 #Настройка сервера
-sudo hostnamectl set-hostname $host
+sudo hostnamectl set-hostname $host@$domain
 echo hostnamectl
 echo "Выполнено!"
 #Установка необходимых компонентов
@@ -46,11 +45,12 @@ sudo systemctl restart sssd
 sudo realm permit 'Domain Admins'
 sudo systemctl restart sssd
 sudo cat > /etc/sudoers.d/domain_admins <<EOF
-%Domain Admins@$domain     ALL=(ALL)   ALL
-%DomainAdmins@$domain     ALL=(ALL)   ALL
-%system\ super\ Domain Admins@$domain ALL=(ALL)       ALL
+%domain\ admins        ALL=(ALL)     ALL
 EOF
 sudo chmod 0440 /etc/sudoers.d/domain_admins
+sudo systemctl restart sssd
+#Настройка файла /etc/sssd/sssd.conf и отключение имени домена на сервере
+sudo sed '16 s/True/False/' /etc/sssd/sssd.conf
 sudo systemctl restart sssd
 systemctl status sssd
 echo "Выполнено!"
