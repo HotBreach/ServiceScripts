@@ -6,8 +6,8 @@ echo -n "Введите имя сервера: "
 read -r host
 # shellcheck disable=SC2154
 #Настройка сервера
-sudo hostnamectl set-hostname $host.$domain
-echo hostname
+sudo hostnamectl set-hostname $host@"$domain"
+hostname
 echo "Выполнено!"
 #Установка необходимых компонентов
 sudo apt -y update
