@@ -50,7 +50,7 @@ EOF
 sudo chmod 0440 /etc/sudoers.d/domain_admins
 sudo systemctl restart sssd
 #Настройка файла /etc/sssd/sssd.conf и отключение имени домена на сервере
-sudo sed '16 s/True/False/' /etc/sssd/sssd.conf
+sudo sed -i '16 s/True/False/' /etc/sssd/sssd.conf
 sudo systemctl restart sssd
 systemctl status sssd
 echo "Выполнено!"
