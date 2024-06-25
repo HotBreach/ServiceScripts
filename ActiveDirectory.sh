@@ -41,7 +41,7 @@ EOF
 sudo pam-auth-update
 sudo systemctl restart sssd 
 #Настройка доступа к серверу 
-sudo realm permit 'Domain Admins'
+sudo realm permit -g 'Domain Admins'
 sudo systemctl restart sssd
 sudo cat > /etc/sudoers.d/domain_admins <<EOF
 %domain\ admins        ALL=(ALL)     ALL
