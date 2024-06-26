@@ -13,10 +13,10 @@ echo "Выполнено!"
 echo "Начинаем настройку adutil"
 curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
 curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+sudo apt -y update
 sudo apt-get remove adutil-preview
 sudo ACCEPT_EULA=Y apt-get install -y adutil
 #Установка необходимых компонентов
-sudo apt -y update
 sudo apt -y install realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
 echo "Выполнено!"
 #Поиск контроллера домена 
