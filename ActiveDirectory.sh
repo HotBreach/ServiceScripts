@@ -9,6 +9,12 @@ read -r host
 sudo hostnamectl set-hostname "$host"
 hostname
 echo "Выполнено!"
+#Настройка модуля adutil
+echo "Начинаем настройку adutil"
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+sudo apt-get remove adutil-preview
+sudo ACCEPT_EULA=Y apt-get install -y adutil
 #Установка необходимых компонентов
 sudo apt -y update
 sudo apt -y install realmd libnss-sss libpam-sss sssd sssd-tools adcli samba-common-bin oddjob oddjob-mkhomedir packagekit
@@ -48,12 +54,6 @@ sudo cat > /etc/sudoers.d/domain_admins <<EOF
 EOF
 sudo chmod 0440 /etc/sudoers.d/domain_admins
 sudo systemctl restart sssd
-#Настройка модуля adutil
-echo "Начинаем настройку adutil"
-curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
-curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
-sudo apt-get remove adutil-preview
-sudo ACCEPT_EULA=Y apt-get install -y adutil
 #Настройка файла /etc/sssd/sssd.conf и отключение имени домена на сервере
 sudo sed -i '17 s/True/False/' /etc/sssd/sssd.conf
 sudo systemctl restart sssd
