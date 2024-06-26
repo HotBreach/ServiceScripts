@@ -60,3 +60,7 @@ sudo systemctl restart sssd
 systemctl status sssd
 echo "Выполнено!"
 echo "Необходима перезегрузка"
+sudo systemctl enable sssd
+sudo systemctl start sssd
+sudo systemctl status sssd
+echo "Выполнен рестарт служб"
