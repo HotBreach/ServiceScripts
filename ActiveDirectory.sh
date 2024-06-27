@@ -29,7 +29,7 @@ sudo realm join -U $login $domain
 realm list 
 echo "Выполнено!"
 #Настройка служебных параментров интеграции 
-sudo bash -c "cat > /usr/share/pam-configs/mkhomedir" <<EOF
+sudo "cat > /usr/share/pam-configs/mkhomedir" <<EOF
 
 Name: activate mkhomedir
 
@@ -60,7 +60,6 @@ sudo sed -i '17 s/True/False/' /etc/sssd/sssd.conf
 sudo systemctl restart sssd
 systemctl status sssd
 echo "Выполнено!"
-echo "Необходима перезегрузка"
 sudo systemctl enable sssd
 sudo systemctl start sssd
 sudo systemctl status sssd
