@@ -29,7 +29,7 @@ sudo realm join -U $login $domain
 realm list 
 echo "Выполнено!"
 #Настройка служебных параментров интеграции 
-sudo "cat > /usr/share/pam-configs/mkhomedir" <<EOF
+sudo cat > /usr/share/pam-configs/mkhomedir <<EOF
 
 Name: activate mkhomedir
 
