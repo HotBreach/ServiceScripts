@@ -5,7 +5,7 @@ dist=$(grep DISTRIB_ID /etc/*-release | awk -F '=' '{print $2}')
 if [ "$dist" == "Ubuntu" ]; then
   echo "Начинаю выполнение"
   paket=apt
-  sudo $paket update && sudo $paket upgrade
+  sudo $paket update 
   sudo $paket install perl
   echo "Обновление выполненно! "
   inst=dpkg
@@ -19,6 +19,7 @@ else
   inst=rpm
 fi
 wget https://store.udv.group/index.php/s/4mBegeErDaC96Mp/download/glpi-agent-UDV.pl
+sudo chmod +x glpi-agent-UDV.pl
 sudo perl glpi-agent-UDV.pl
 echo "Начинаю настройку агента"
 sudo sed -i '12 s|#server = http://server.domain.com//|server = http://glpi.udv.group/' /etc/glpi-agent/agent.cfg
