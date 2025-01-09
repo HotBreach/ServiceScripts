@@ -1,0 +1,27 @@
+#!/bin/bash
+
+dist=$(grep DISTRIB_ID /etc/*-release | awk -F '=' '{print $2}')
+
+if [ "$dist" == "Ubuntu" ]; then
+  echo "Начинаю выполнение"
+  paket=apt
+  sudo $paket update && sudo $paket upgrade
+  sudo $paket install perl
+  echo "Обновление выполненно! "
+  inst=dpkg
+  wget https://github.com/glpi-project/glpi-agent/releases/download/1.11/glpi-agent_1.11-1_all.deb 
+  sudo $inst -i ~/glpi-agent_1.11-1_all.deb
+  sudo rm ~/glpi-agent_1.11-1_all.deb
+else
+  echo "Используется дистрибутив отличный от Ubuntu, по умолчанию назначен yum"
+  paket=yum
+  sudo $paket update && sudo $paket upgrade
+  sudo $paket install perl
+  echo "Обновление выполненно! "
+  inst=rpm
+  wget https://github.com/glpi-project/glpi-agent/releases/download/1.11/glpi-agent-1.11-1.noarch.rpm ~/
+  sudo $inst -i ~/glpi-agent-1.11-1.noarch.rpm
+  sudo rm ~/glpi-agent-1.11-1.noarch.rpm
+fi
+echo "Начинаю настройку агента"
+echo "Завершено!"
